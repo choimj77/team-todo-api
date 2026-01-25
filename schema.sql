@@ -1,0 +1,25 @@
+CREATE DATABASE IF NOT EXISTS team_todo DEFAULT CHARACTER SET utf8mb4;
+USE team_todo;
+
+CREATE TABLE teams (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(100) NOT NULL,
+  join_code VARCHAR(16) NOT NULL UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE todos (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  team_id BIGINT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  done BOOLEAN NOT NULL DEFAULT FALSE,
+  priority ENUM('low','mid','high') NOT NULL DEFAULT 'mid',
+  due_at DATE NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_todos_team FOREIGN KEY (team_id) REFERENCES teams(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_todos_team ON todos(team_id);
+CREATE INDEX idx_todos_team_done ON todos(team_id, done);
+CREATE INDEX idx_todos_due ON todos(due_at);
