@@ -34,6 +34,19 @@ router.post("/", async (req, res) => {
   return res.status(500).json({ error: "failed to generate join code" });
 });
 
+// 팀 목록 조회
+router.get("/", async (req, res) => {
+  try {
+    const [rows] = await pool.execute(
+      "SELECT id, name, join_code, created_at FROM teams ORDER BY created_at DESC"
+    );
+    return res.json(rows);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "server error" });
+  }
+});
+
 // join_code로 팀 조회(참여용)
 router.get("/by-code/:code", async (req, res) => {
   const code = String(req.params.code || "").trim().toUpperCase();
