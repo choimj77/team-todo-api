@@ -1,7 +1,8 @@
 # Team Todo API
 
-팀 단위로 할 일을 관리할 수 있는 **웹 기반 To-do 관리 백엔드 API**입니다.  
-Node.js + Express + MySQL을 사용해 REST API 형태로 구현했습니다.
+팀 단위로 할 일을 관리할 수 있는 **웹 기반 To-do 관리 백엔드 REST API**입니다.  
+팀 생성 및 참여, 팀별 할 일 관리 기능을 제공하며  
+Node.js, Express, MySQL을 사용해 구현했습니다.
 
 ---
 
@@ -13,6 +14,16 @@ Node.js + Express + MySQL을 사용해 REST API 형태로 구현했습니다.
 - **ORM/Driver**: mysql2
 - **Dev Tool**: nodemon
 - **Environment**: dotenv
+
+---
+
+## ✨ Features
+
+- 팀 생성 및 참여를 위한 **Join Code** 기능
+- 팀 단위 할 일(To-do) 관리
+- 할 일 CRUD(Create / Read / Update / Delete)
+- 우선순위(priority) 및 마감일(due date) 지원
+- Express + MySQL 기반 RESTful API 설계
 
 ---
 
@@ -34,7 +45,7 @@ Team-Todo-api/
 
 ## ⚙️ Environment Setup
 
-### 1️⃣ Repository Clone
+### 1️⃣ Clone Repository
 
 ```bash
 git clone https://github.com/choimj77/team-todo-api.git
@@ -61,19 +72,19 @@ DB_PASSWORD=
 DB_NAME=team_todo
 
 ```
-⚠️ .env 파일은 GitHub에 포함되지 않습니다.
+⚠️ .env 파일은 GitHub에 커밋되지 않습니다.
 
 ---
 
-## ▶️ Run Server (Dev)
+## ▶️ Run Server (Development)
 
 ```bash
 run npm dev
 ```
 
-서버 실행 후:
+서버 실행 후 접속:
 
-```arduino
+```text
 http://localhost:3000
 ```
 
@@ -111,6 +122,21 @@ Response:
 
 ---
 
+## API Endpoints
+
+### Teams
+- `POST /api/teams` : Create a team
+- `GET /api/teams` : Get all teams
+- `GET /api/teams/by-code/:code` : Get team by join code
+
+### Todos
+- `GET /api/todos?teamId={teamId}` : Get todos by team
+- `POST /api/todos` : Create a todo
+- `PATCH /api/todos/:id` : Update a todo
+- `DELETE /api/todos/:id` : Delete a todo
+
+---
+
 ## 🎯 Purpose
 
 - 팀 단위 협업을 고려한 할 일 관리 시스템 백엔드 구현
@@ -125,3 +151,10 @@ Response:
 - Todos API (CRUD)
 - 사용자 권한 및 인증
 - 프론트엔드(To-do UI) 연동
+
+---
+
+## 📝 Notes
+
+이 프로젝트는 실제 서비스에서 사용되는 백엔드 패턴을 연습하기 위해
+팀과 할 일을 명확히 분리한 구조로 설계되었습니다.
