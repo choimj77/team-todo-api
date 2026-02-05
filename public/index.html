@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>To-Do Manage</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <section class="team-box">
+    <input id="teamCodeInput" placeholder="JOIN CODE 입력 (예: 8KQ2PZ7A)" />
+    <button id="teamLoadBtn">팀 불러오기</button>
+    <span id="teamStatus">팀: (미선택)</span>
+  </section>
+
+  <div class="app">
+    <header class="app-header">
+      <h1>오늘 할 일</h1>
+
+    </header>
+
+    <section class="todo-input-section">     
+      <form id="todo-form" class="todo-form">
+        <input
+          id="todoTitleInput"
+          type="text"
+          placeholder="할 일을 입력하세요"
+          autocomplete="off"
+        />
+        <input
+          id="todoDueInput"
+          type="date"
+        />
+        <select id="todoPrioritySelect">
+          <option value="mid">보통</option>
+          <option value="high">중요</option>
+          <option value="low">여유</option>
+        </select>
+        <button id="todoAddBtn" type="submit">추가</button>
+      </form>
+    </section>
+
+    <section class="todo-toolbar">
+      <div class="filters">
+        <button data-filter="all" class="filter-btn active">전체</button>
+        <button data-filter="active" class="filter-btn">진행중</button>
+        <button data-filter="done" class="filter-btn">완료</button>
+      </div>
+      <div class="search-sort">
+        <input
+          id="search-input"
+          type="text"
+          placeholder="검색..."
+        />
+        <select id="sort-select">
+          <option value="created-desc">최신순</option>
+          <option value="created-asc">오래된순</option>
+          <option value="due-asc">마감일 빠른순</option>
+          <option value="due-desc">마감일 늦은순</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="todo-stats">
+      <span id="stat-total">전체: 0</span>
+      <span id="stat-active">진행중: 0</span>
+      <span id="stat-done">완료: 0</span>
+    </section>
+
+    <main>
+      <ul id="todoList" class="todo-list">
+        <!-- 할 일 아이템이 JS로 들어갈 자리 -->
+      </ul>
+    </main>
+
+    <footer class="app-footer">
+      <p>Made by 최민준</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
