@@ -1,8 +1,7 @@
 # Team Todo API
 
-팀 단위로 할 일을 관리할 수 있는 **웹 기반 To-do 관리 백엔드 REST API**입니다.  
-팀 생성 및 참여, 팀별 할 일 관리 기능을 제공하며  
-Node.js, Express, MySQL을 사용해 구현했습니다.
+팀 단위로 할 일을 관리할 수 있는 **웹 기반 To-do 관리 백엔드 + 간단 UI** 프로젝트입니다.  
+Node.js(Express) + MySQL로 REST API를 구현했고, `public/`에서 UI를 정적 서빙합니다.
 
 ---
 
@@ -19,11 +18,12 @@ Node.js, Express, MySQL을 사용해 구현했습니다.
 
 ## ✨ Features
 
-- 팀 생성 및 참여를 위한 **Join Code** 기능
-- 팀 단위 할 일(To-do) 관리
-- 할 일 CRUD(Create / Read / Update / Delete)
-- 우선순위(priority) 및 마감일(due date) 지원
-- Express + MySQL 기반 RESTful API 설계
+- 팀 조회(Join Code로 팀 불러오기)
+- 팀별 To-do 관리 (CRUD)
+- 완료/미완료(done) 처리
+- 우선순위(priority) / 마감일(due_at) 지원
+- 검색 / 필터(전체·진행중·완료) / 정렬(최신순 등) UI
+
 
 ---
 
@@ -43,22 +43,7 @@ Team-Todo-api/
 
 ---
 
-## ⚙️ Environment Setup
-
-### 1️⃣ Clone Repository
-
-```bash
-git clone https://github.com/choimj77/team-todo-api.git
-cd team-todo-api
-```
-
-### 2️⃣ Install Dependencies
-
-```bash
-npm install
-```
-
-### 3️⃣ Environment Variables
+## ⚙️ Environment Variables
 
 `.env.example`을 참고해 `.env` 파일을 생성합니다.
 
@@ -76,11 +61,18 @@ DB_NAME=team_todo
 
 ---
 
-## ▶️ Run Server (Development)
+## ▶️ Run Locally
 
 ```bash
-run npm dev
+git clone https://github.com/choimj77/team-todo-api.git
+cd team-todo-api
+npm install
+npm run dev
 ```
+
+- UI: `http://localhost:3000/`
+- API Health: `http://localhost:3000/health`
+
 
 서버 실행 후 접속:
 
@@ -90,39 +82,12 @@ http://localhost:3000
 
 ---
 
-## ✅ Health Check
-
-### API Derver
-
-```sql
-GET /
-```
-
-Response:
-```json
-{
-  "ok": true,
-  "message": "Team Todo API running"
-}
-```
-
-### Database Connection Test
-
-```bash
-GET /db-test
-```
-
-Response:
-```json
-{
-  "ok": true,
-  "db": 1
-}
-```
-
----
-
 ## API Endpoints
+
+### Health
+- `GET / : UI/서버 기본 응답`
+- `GET /health : 서버 상태 확인`
+- `GET /db-test : DB 연결 테스트 (구현한 경우)`
 
 ### Teams
 - `POST /api/teams` : Create a team
@@ -137,24 +102,42 @@ Response:
 
 ---
 
-## 🎯 Purpose
+## 🧪 Example Requests
 
-- 팀 단위 협업을 고려한 할 일 관리 시스템 백엔드 구현
-- Node.js 기반 REST API 설계 및 MySQL 연동 경험
-- 환경 변수 분리 및 보안 설정(.env) 적용
+### Create Todo
+`POST /api/todos`
+
+```json
+{
+  "team_id": 10,
+  "title": "첫 번째 할 일",
+  "priority": "mid",
+  "due_at": "2026-02-01"
+}
+```
+### Update Todo (done 처리)
+`PATCH /api/todos/:id `
+
+```json
+{
+  "done": 1
+}
+```
 
 ---
 
 ## 🚀 Future Work
 
-- Teams API (팀 생성 / 참여)
-- Todos API (CRUD)
-- 사용자 권한 및 인증
-- 프론트엔드(To-do UI) 연동
+- 로그인/권한(팀 멤버) 기능
+- 배포(Render/Railway) + DB 호스팅
+- UI 개선(팀 선택 UX, 인라인 편집 UX 고도화)
 
 ---
 
 ## 📝 Notes
 
-이 프로젝트는 실제 서비스에서 사용되는 백엔드 패턴을 연습하기 위해
-팀과 할 일을 명확히 분리한 구조로 설계되었습니다.
+이 프로젝트는 실제 서비스에서 자주 쓰는 패턴을 연습하기 위해,
+- 환경변수 분리
+- REST API 구조화(routes 분리)
+- MySQL 연동 및 CRUD
+- 정적 UI + API 통합 서빙을 목표로 구현했습니다.
